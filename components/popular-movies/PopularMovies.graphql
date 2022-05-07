@@ -1,0 +1,5 @@
+query PopularMoviesQuery($page: Int) {
+  popularMovies(page: $page) {
+    title
+  }
+}
