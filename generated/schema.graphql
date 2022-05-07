@@ -9,5 +9,5 @@ type Movie {
 }
 
 type Query {
-  ok: Boolean!
+  popularMovies(page: Int): [Movie]
 }

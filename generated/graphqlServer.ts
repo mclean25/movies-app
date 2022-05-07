@@ -49,7 +49,7 @@ export interface NexusGenFieldTypes {
     title: string | null; // String
   }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    popularMovies: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
   }
 }
 
@@ -60,11 +60,16 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
   }
   Query: { // field return type name
-    ok: 'Boolean'
+    popularMovies: 'Movie'
   }
 }
 
 export interface NexusGenArgTypes {
+  Query: {
+    popularMovies: { // args
+      page?: number | null; // Int
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {

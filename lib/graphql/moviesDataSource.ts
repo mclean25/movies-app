@@ -1,6 +1,6 @@
 import { HTTPDataSource } from "apollo-datasource-http";
 import { Pool } from "undici";
-import { Movie } from "./sources/api";
+import { Movie, PopularMoviesResponse } from "./sources/api";
 
 export class MoviesApi extends HTTPDataSource {
   apiKey = process.env.NEXT_PUBLIC_DB_API_KEY_V3;
@@ -9,9 +9,15 @@ export class MoviesApi extends HTTPDataSource {
     super(baseUrl, { pool });
   }
 
-  async getMovies(): Promise<Movie[]> {
-    const response = await this.get<Movie[]>(`/popular?api_key=${this.apiKey}`);
+  async getMovies(pageId: number | null | undefined): Promise<Movie[]> {
+    const response = await this.get<PopularMoviesResponse>(
+      `/3/movie/popular?api_key=${this.apiKey}&page=${pageId ?? 1}`
+    );
 
-    return response.body;
+    if (response.statusCode !== 200 || !response.body.results) {
+      throw Error("Didn't get any results back");
+    }
+
+    return response.body.results;
   }
 }
