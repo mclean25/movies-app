@@ -10,15 +10,11 @@ const pool = new Pool(baseUrl);
 export const server = new ApolloServer({
   schema,
   async context(ctx: Context) {
-    // const accessToken = await getAccessTokenSafe(ctx.req, ctx.res);
-
     return { ...ctx };
   },
   dataSources() {
     return {
       moviesApi: new MoviesApi(baseUrl, pool),
-      // modulesApi: new ModulesApi(baseUrl),
-      // programsApi: new ProgramsApi(baseUrl),
     };
   },
 });

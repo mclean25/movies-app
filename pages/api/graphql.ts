@@ -18,7 +18,6 @@ const handleGraphQL: NextApiHandler = async (req, res): Promise<void> => {
     res.end();
     return;
   }
-  // res.setHeader("Authorization", `Bearer ${process.env.DB_API_KEY_V4}}`);
 
   await startServer;
   await server.createHandler({

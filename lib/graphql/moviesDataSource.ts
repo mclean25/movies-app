@@ -3,7 +3,7 @@ import { Pool } from "undici";
 import { Movie, PopularMoviesResponse } from "./sources/api";
 
 export class MoviesApi extends HTTPDataSource {
-  apiKey = process.env.NEXT_PUBLIC_DB_API_KEY_V3;
+  apiKey = process.env.DB_API_KEY_V3;
 
   constructor(baseUrl: string, pool: Pool) {
     super(baseUrl, { pool });
