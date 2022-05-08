@@ -46,7 +46,10 @@ export interface NexusGenFieldTypes {
   Movie: { // field return type
     id: string | null; // ID
     overview: string | null; // String
+    poster_path: string | null; // String
+    release_date: string | null; // String
     title: string | null; // String
+    vote_average: string | null; // String
   }
   Query: { // field return type
     popularMovies: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
@@ -57,7 +60,10 @@ export interface NexusGenFieldTypeNames {
   Movie: { // field return type name
     id: 'ID'
     overview: 'String'
+    poster_path: 'String'
+    release_date: 'String'
     title: 'String'
+    vote_average: 'String'
   }
   Query: { // field return type name
     popularMovies: 'Movie'

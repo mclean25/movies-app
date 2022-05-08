@@ -1,5 +1,10 @@
 query PopularMoviesQuery($page: Int) {
   popularMovies(page: $page) {
+    id
     title
+    overview
+    poster_path
+    release_date
+    vote_average
   }
 }

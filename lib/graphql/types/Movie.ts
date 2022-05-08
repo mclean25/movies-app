@@ -6,5 +6,8 @@ export const Movie = objectType({
     t.id("id");
     t.string("title");
     t.string("overview");
+    t.string("poster_path");
+    t.string("release_date");
+    t.string("vote_average");
   },
 });

@@ -19,7 +19,10 @@ export type Movie = {
   __typename?: 'Movie';
   id?: Maybe<Scalars['ID']>;
   overview?: Maybe<Scalars['String']>;
+  poster_path?: Maybe<Scalars['String']>;
+  release_date?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
+  vote_average?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -37,13 +40,18 @@ export type PopularMoviesQueryQueryVariables = Exact<{
 }>;
 
 
-export type PopularMoviesQueryQuery = { __typename?: 'Query', popularMovies?: Array<{ __typename?: 'Movie', title?: string | null } | null> | null };
+export type PopularMoviesQueryQuery = { __typename?: 'Query', popularMovies?: Array<{ __typename?: 'Movie', id?: string | null, title?: string | null, overview?: string | null, poster_path?: string | null, release_date?: string | null, vote_average?: string | null } | null> | null };
 
 
 export const PopularMoviesQueryDocument = gql`
     query PopularMoviesQuery($page: Int) {
   popularMovies(page: $page) {
+    id
     title
+    overview
+    poster_path
+    release_date
+    vote_average
   }
 }
     `;
