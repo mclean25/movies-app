@@ -54,6 +54,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     movie: NexusGenRootTypes['Movie'] | null; // Movie
     popularMovies: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
+    search: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
   }
 }
 
@@ -69,6 +70,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     movie: 'Movie'
     popularMovies: 'Movie'
+    search: 'Movie'
   }
 }
 
@@ -79,6 +81,9 @@ export interface NexusGenArgTypes {
     }
     popularMovies: { // args
       page?: number | null; // Int
+    }
+    search: { // args
+      query: string; // String!
     }
   }
 }

@@ -1,0 +1,8 @@
+query Search($query: String!) {
+  search(query: $query) {
+    id
+    title
+    poster_path
+    vote_average
+  }
+}

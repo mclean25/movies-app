@@ -14,7 +14,7 @@ export class MoviesApi extends HTTPDataSource {
       `/3/movie/popular?api_key=${this.apiKey}&page=${pageId ?? 1}`
     );
 
-    // How to properly surface errors here to the graphql client? Not sure...
+    // TODO: How to properly surface errors here to the graphql client? Not sure...
     if (response.statusCode !== 200 || !response.body.results) {
       throw Error("Didn't get any results back");
     }
@@ -28,5 +28,17 @@ export class MoviesApi extends HTTPDataSource {
     );
 
     return response.body;
+  }
+
+  async search(query: string): Promise<Movie[]> {
+    const response = await this.get<PopularMoviesResponse>(
+      `/3/search/movie?api_key=${this.apiKey}&query=${query}`
+    );
+
+    if (response.statusCode !== 200 || !response.body.results) {
+      throw Error("Didn't get any results back");
+    }
+
+    return response.body.results;
   }
 }

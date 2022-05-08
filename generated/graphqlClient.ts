@@ -29,6 +29,7 @@ export type Query = {
   __typename?: 'Query';
   movie?: Maybe<Movie>;
   popularMovies?: Maybe<Array<Maybe<Movie>>>;
+  search?: Maybe<Array<Maybe<Movie>>>;
 };
 
 
@@ -39,6 +40,11 @@ export type QueryMovieArgs = {
 
 export type QueryPopularMoviesArgs = {
   page?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QuerySearchArgs = {
+  query: Scalars['String'];
 };
 
 export type MovieQueryQueryVariables = Exact<{
@@ -54,6 +60,13 @@ export type PopularMoviesQueryQueryVariables = Exact<{
 
 
 export type PopularMoviesQueryQuery = { __typename?: 'Query', popularMovies?: Array<{ __typename?: 'Movie', id?: string | null, title?: string | null, overview?: string | null, poster_path?: string | null, release_date?: string | null, vote_average?: string | null } | null> | null };
+
+export type SearchQueryVariables = Exact<{
+  query: Scalars['String'];
+}>;
+
+
+export type SearchQuery = { __typename?: 'Query', search?: Array<{ __typename?: 'Movie', id?: string | null, title?: string | null, poster_path?: string | null, vote_average?: string | null } | null> | null };
 
 
 export const MovieQueryDocument = gql`
@@ -136,3 +149,41 @@ export function usePopularMoviesQueryLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type PopularMoviesQueryQueryHookResult = ReturnType<typeof usePopularMoviesQueryQuery>;
 export type PopularMoviesQueryLazyQueryHookResult = ReturnType<typeof usePopularMoviesQueryLazyQuery>;
 export type PopularMoviesQueryQueryResult = Apollo.QueryResult<PopularMoviesQueryQuery, PopularMoviesQueryQueryVariables>;
+export const SearchDocument = gql`
+    query Search($query: String!) {
+  search(query: $query) {
+    id
+    title
+    poster_path
+    vote_average
+  }
+}
+    `;
+
+/**
+ * __useSearchQuery__
+ *
+ * To run a query within a React component, call `useSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchQuery(baseOptions: Apollo.QueryHookOptions<SearchQuery, SearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchQuery, SearchQueryVariables>(SearchDocument, options);
+      }
+export function useSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchQuery, SearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchQuery, SearchQueryVariables>(SearchDocument, options);
+        }
+export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
+export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
+export type SearchQueryResult = Apollo.QueryResult<SearchQuery, SearchQueryVariables>;
