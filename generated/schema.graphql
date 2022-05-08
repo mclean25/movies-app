@@ -12,5 +12,6 @@ type Movie {
 }
 
 type Query {
+  movie(id: Int!): Movie
   popularMovies(page: Int): [Movie]
 }

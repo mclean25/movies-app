@@ -1,0 +1,10 @@
+query MovieQuery($id: Int!) {
+  movie(id: $id) {
+    id
+    title
+    overview
+    poster_path
+    release_date
+    vote_average
+  }
+}

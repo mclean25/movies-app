@@ -52,6 +52,7 @@ export interface NexusGenFieldTypes {
     vote_average: string | null; // String
   }
   Query: { // field return type
+    movie: NexusGenRootTypes['Movie'] | null; // Movie
     popularMovies: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
   }
 }
@@ -66,12 +67,16 @@ export interface NexusGenFieldTypeNames {
     vote_average: 'String'
   }
   Query: { // field return type name
+    movie: 'Movie'
     popularMovies: 'Movie'
   }
 }
 
 export interface NexusGenArgTypes {
   Query: {
+    movie: { // args
+      id: number; // Int!
+    }
     popularMovies: { // args
       page?: number | null; // Int
     }
