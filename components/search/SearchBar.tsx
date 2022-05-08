@@ -1,9 +1,8 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useSearchQuery } from "../../generated/graphqlClient";
+import { Movie, useSearchQuery } from "../../generated/graphqlClient";
 
-interface SearchBarProps {}
-
-const SearchBar: React.FC<SearchBarProps> = () => {
+const SearchBar: React.FC = () => {
   const [searchText, setSearchText] = useState<string>("");
   return (
     <div className="relative w-full">
@@ -33,14 +32,37 @@ const SearchContent: React.FC<{
   if (searchQuery.loading) {
     return <span>Loading...</span>;
   }
+
   if (searchQuery.error) {
     return <span>Oops... something went wrong.</span>;
   }
-  if (searchQuery.data?.search && searchQuery.data.search.length > 0) {
-    return <span>Found stuff...</span>;
+
+  const movies = searchQuery.data?.search?.filter(
+    (movie): movie is Movie => !!movie
+  );
+  if (movies && movies.length > 0) {
+    return (
+      <div className="gap-2">
+        {movies.map((result) => (
+          <SearchResult key={result.id} movie={result} />
+        ))}
+      </div>
+    );
   }
 
   return <span>0 results found</span>;
+};
+
+const SearchResult: React.FC<{ movie: Movie }> = ({ movie }) => {
+  const router = useRouter();
+  return (
+    <div
+      onClick={() => router.push(`/movies/${movie.id}`)}
+      className="flex flex-row cursor-pointer hover:underline"
+    >
+      <span>{movie.title}</span>
+    </div>
+  );
 };
 
 export default SearchBar;
