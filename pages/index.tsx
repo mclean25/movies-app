@@ -1,28 +1,16 @@
 import type { NextPage } from "next";
-import { usePopularMoviesQueryQuery } from "../generated/graphqlClient";
+import PageLayout from "../components/layout/PageLayout";
+import PopularMovies from "../components/popular-movies/PopularMovies";
 
 const Home: NextPage = () => {
-  const popularMovies = usePopularMoviesQueryQuery();
-
-  if (popularMovies.loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (popularMovies.error) {
-    return <div>Oops... something went wrong</div>;
-  }
-
-  if (popularMovies.data?.popularMovies) {
-    return (
-      <div>
-        {popularMovies.data.popularMovies.map((movie) => (
-          <div key={movie?.title}>{movie?.title}</div>
-        ))}
+  return (
+    <PageLayout>
+      <div className="space-y-2">
+        <h2 className="text-xl font-bold">Popular Movies</h2>
+        <PopularMovies />
       </div>
-    );
-  }
-
-  return <div>No results</div>;
+    </PageLayout>
+  );
 };
 
 export default Home;
