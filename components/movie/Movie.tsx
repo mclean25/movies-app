@@ -1,5 +1,6 @@
 import React from "react";
 import { useMovieQueryQuery } from "../../generated/graphqlClient";
+import MovieDisplay from "./MovieDisplay";
 
 interface MovieProps {
   id: number;
@@ -16,12 +17,8 @@ const MovieDetails: React.FC<MovieProps> = ({ id }) => {
     return <div>Oops... something went wrong</div>;
   }
 
-  if (movieQuery.data) {
-    return (
-      <div className="flex flex-wrap gap-4">
-        <h1>{movieQuery.data.movie?.title}</h1>
-      </div>
-    );
+  if (movieQuery.data?.movie) {
+    return <MovieDisplay movie={movieQuery.data.movie} />;
   }
 
   return <div>No results</div>;
