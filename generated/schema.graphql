@@ -13,6 +13,6 @@ type Movie {
 
 type Query {
   movie(id: Int!): Movie
-  popularMovies(page: Int): [Movie]
-  search(query: String!): [Movie]
+  popularMovies(page: Int): [Movie!]!
+  search(query: String!): [Movie!]!
 }

@@ -53,8 +53,8 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     movie: NexusGenRootTypes['Movie'] | null; // Movie
-    popularMovies: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
-    search: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
+    popularMovies: NexusGenRootTypes['Movie'][]; // [Movie!]!
+    search: NexusGenRootTypes['Movie'][]; // [Movie!]!
   }
 }
 

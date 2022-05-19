@@ -28,8 +28,8 @@ export type Movie = {
 export type Query = {
   __typename?: 'Query';
   movie?: Maybe<Movie>;
-  popularMovies?: Maybe<Array<Maybe<Movie>>>;
-  search?: Maybe<Array<Maybe<Movie>>>;
+  popularMovies: Array<Movie>;
+  search: Array<Movie>;
 };
 
 
@@ -59,16 +59,27 @@ export type PopularMoviesQueryQueryVariables = Exact<{
 }>;
 
 
-export type PopularMoviesQueryQuery = { __typename?: 'Query', popularMovies?: Array<{ __typename?: 'Movie', id?: string | null, title?: string | null, overview?: string | null, poster_path?: string | null, release_date?: string | null, vote_average?: string | null } | null> | null };
+export type PopularMoviesQueryQuery = { __typename?: 'Query', popularMovies: Array<{ __typename?: 'Movie', id?: string | null, title?: string | null, overview?: string | null, poster_path?: string | null, release_date?: string | null, vote_average?: string | null }> };
+
+export type CoreMovieFragment = { __typename?: 'Movie', id?: string | null, title?: string | null, overview?: string | null, poster_path?: string | null, release_date?: string | null, vote_average?: string | null };
 
 export type SearchQueryVariables = Exact<{
   query: Scalars['String'];
 }>;
 
 
-export type SearchQuery = { __typename?: 'Query', search?: Array<{ __typename?: 'Movie', id?: string | null, title?: string | null, poster_path?: string | null, vote_average?: string | null } | null> | null };
+export type SearchQuery = { __typename?: 'Query', search: Array<{ __typename?: 'Movie', id?: string | null, title?: string | null, overview?: string | null, poster_path?: string | null, release_date?: string | null, vote_average?: string | null }> };
 
-
+export const CoreMovieFragmentDoc = gql`
+    fragment CoreMovie on Movie {
+  id
+  title
+  overview
+  poster_path
+  release_date
+  vote_average
+}
+    `;
 export const MovieQueryDocument = gql`
     query MovieQuery($id: Int!) {
   movie(id: $id) {
@@ -112,15 +123,10 @@ export type MovieQueryQueryResult = Apollo.QueryResult<MovieQueryQuery, MovieQue
 export const PopularMoviesQueryDocument = gql`
     query PopularMoviesQuery($page: Int) {
   popularMovies(page: $page) {
-    id
-    title
-    overview
-    poster_path
-    release_date
-    vote_average
+    ...CoreMovie
   }
 }
-    `;
+    ${CoreMovieFragmentDoc}`;
 
 /**
  * __usePopularMoviesQueryQuery__
@@ -152,13 +158,10 @@ export type PopularMoviesQueryQueryResult = Apollo.QueryResult<PopularMoviesQuer
 export const SearchDocument = gql`
     query Search($query: String!) {
   search(query: $query) {
-    id
-    title
-    poster_path
-    vote_average
+    ...CoreMovie
   }
 }
-    `;
+    ${CoreMovieFragmentDoc}`;
 
 /**
  * __useSearchQuery__

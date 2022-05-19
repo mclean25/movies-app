@@ -1,10 +1,13 @@
 query PopularMoviesQuery($page: Int) {
   popularMovies(page: $page) {
+    ...CoreMovie
+  }
+}
+fragment CoreMovie on Movie {
     id
     title
     overview
     poster_path
     release_date
     vote_average
-  }
 }

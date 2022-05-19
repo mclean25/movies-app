@@ -1,6 +1,9 @@
 import React from "react";
-import { usePopularMoviesQueryQuery } from "../../generated/graphqlClient";
-import MovieCard from "../Cards/MovieCard";
+import {
+  Movie,
+  usePopularMoviesQueryQuery,
+} from "../../generated/graphqlClient";
+import MoviesDisplay from "../MoviesDisplay";
 
 interface PopularMoviesProps {}
 
@@ -17,12 +20,8 @@ const PopularMovies: React.FC<PopularMoviesProps> = () => {
 
   if (popularMovies.data?.popularMovies) {
     return (
-      <div className="flex flex-wrap gap-4">
-        {popularMovies.data.popularMovies.map((movie, index) => {
-          if (movie) {
-            return <MovieCard key={movie?.id ?? index} movie={movie} />;
-          }
-        })}
+      <div className="flex flex-wrap space-y-4">
+        <MoviesDisplay movies={popularMovies.data.popularMovies as Movie[]} />
       </div>
     );
   }
